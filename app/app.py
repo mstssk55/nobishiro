@@ -8,7 +8,7 @@ app = Flask(__name__)
 #「/」へアクセスがあった場合に、"Hello World"の文字列を返す
 @app.route("/")
 def hello():
-    return "Hello World"
+    return "Hello python"
 
 
 #「/index」へアクセスがあった場合に、「index.html」を返す
