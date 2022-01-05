@@ -4,11 +4,11 @@ import setting as s
 from dotenv import load_dotenv
 load_dotenv()
 import sys
-server = os.environ['SERVER_NAME']
-database = os.environ['DB_NAME']
-username = os.environ['USER_NAME']
-password = os.environ['PASSWORD']   
-driver= os.environ['DRIVER']
+server = os.environ['SQLCONNSTR_SERVER_NAME']
+database = os.environ['SQLCONNSTR_DB_NAME']
+username = os.environ['SQLCONNSTR_USER_NAME']
+password = os.environ['SQLCONNSTR_PASSWORD']   
+driver= os.environ['SQLCONNSTR_DRIVER']
 
 # server = os.getenv('SERVER_NAME')
 # database = os.getenv('DB_NAME')
