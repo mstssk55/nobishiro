@@ -5,8 +5,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
-<body>
-    <h1>Flaskチュートリアル</h1>
+<body class="container bg-light">
+    <main>
+        <div class="logo pt-3 pb-1 background_header">
+            <img src="/static/images/logo.png" alt="" class="d-block mx-auto mb-4">
+        </div>
+
+        <ul class="room_list d-flex flex-wrap w-100">
+            {% for r in room %}
+            <li class="w-25">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title text-center room_number text-success">{{r}}</p>
+                        <p class="card-text">最終受信</p>
+                        {% for t in d_type %}
+                            <p class="card-text font-weight-bold">{{t}}</p>
+                            {%if data[r][t][0] |length > 0 %}
+                                <p class="card-text ml-2">vibration：{{data[r][t][0][5]}}</p>
+                                <p class="card-text ml-2">datetime：{{data[r][t][0][9]}}</p>
+                            {% endif%}
+                        {% endfor %}
+                        <!-- <a href="#" class="card-link">Another link</a> -->
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </main>
 </body>
 </html>
