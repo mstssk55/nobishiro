@@ -4,17 +4,19 @@ import setting as s
 from dotenv import load_dotenv
 load_dotenv()
 import sys
-server = os.environ['SQLCONNSTR_SERVER_NAME']
-database = os.environ['SQLCONNSTR_DB_NAME']
-username = os.environ['SQLCONNSTR_USER_NAME']
-password = os.environ['SQLCONNSTR_PASSWORD']   
-driver= os.environ['SQLCONNSTR_DRIVER']
 
-# server = os.getenv('SERVER_NAME')
-# database = os.getenv('DB_NAME')
-# username = os.getenv('USER_NAME')
-# password = os.getenv('PASSWORD')   
-# driver= os.getenv('DRIVER')
+if os.environ.get('SQLCONNSTR_SERVER_NAME'):
+    server = os.environ['SQLCONNSTR_SERVER_NAME']
+    database = os.environ['SQLCONNSTR_DB_NAME']
+    username = os.environ['SQLCONNSTR_USER_NAME']
+    password = os.environ['SQLCONNSTR_PASSWORD']   
+    driver= os.environ['SQLCONNSTR_DRIVER']
+else:
+    server = os.getenv('SERVER_NAME')
+    database = os.getenv('DB_NAME')
+    username = os.getenv('USER_NAME')
+    password = os.getenv('PASSWORD')   
+    driver= os.getenv('DRIVER')
 
 # def get_iot_data():
 #     iot_datas = {}
