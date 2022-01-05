@@ -1,0 +1,10 @@
+html{
+    font-size: 62.5%;   
+}
+.background_header{
+    background-color: #343a40!important;
+    opacity: 0.3;
+}
+.room_number{
+    font-size: 5rem;
+}
