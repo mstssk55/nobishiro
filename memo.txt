@@ -1,0 +1,17 @@
+クエリ---------------------------------------------------------
+SELECT
+    Device.id,
+    Device.JSTTime,
+    Device.ConnectionDeviceId,
+	Device.vibration
+FROM
+    [dbo].[iotsql] AS Device
+    INNER JOIN (SELECT
+                    ConnectionDeviceId,
+                    MAX(JSTTime) AS MaxTime
+                FROM
+                    [dbo].[iotsql]
+                GROUP BY
+                    ConnectionDeviceId) AS DeviceB
+    ON Device.JSTTime = DeviceB.MaxTime
+    AND Device.ConnectionDeviceId = DeviceB.ConnectionDeviceId;

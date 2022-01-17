@@ -18,39 +18,22 @@ else:
     password = os.getenv('PASSWORD')   
     driver= os.getenv('DRIVER')
 
-# def get_iot_data():
-#     iot_datas = {}
-#     for n in s.room_number:
-#         datas = []
-#         with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password) as conn:
-#             with conn.cursor() as cursor:
-#                 cursor.execute("SELECT TOP 10* FROM dbo.iotsql Where room = ? Order By id DESC",n)
-#                 row = cursor.fetchone()
-#                 while row:
-#                     datas.append(row)
-#                     row = cursor.fetchone()
-#         iot_datas[n] = datas
-#     return iot_datas
-
 def get_iot_data():
-    print(server)
-    print(database)
-    print(username)
-    print(password)
-    print(driver)
 
-    iot_datas = {}
-    for n in s.room_number:
-        datas = {}
-        for t in s.device_type:
-            type_datas = []
-            with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password) as conn:
-                with conn.cursor() as cursor:
-                    cursor.execute("SELECT TOP 10* FROM dbo.iotsql Where room = ? And type = ? Order By id DESC",n,t)
-                    row = cursor.fetchone()
-                    while row:
-                        type_datas.append(row)
-                        row = cursor.fetchone()
-            datas[t] = type_datas
-        iot_datas[n] = datas
-    return iot_datas
+    sql = 'SELECT Device.id,Device.JSTTime,Device.ConnectionDeviceId,Device.vibration FROM dbo.iotsql AS Device INNER JOIN (SELECT ConnectionDeviceId,MAX(JSTTime) AS MaxTime FROM dbo.iotsql GROUP BY ConnectionDeviceId) AS DeviceB ON Device.JSTTime = DeviceB.MaxTime AND Device.ConnectionDeviceId = DeviceB.ConnectionDeviceId;'
+    iot_datas = []
+    datas = {}
+    with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password) as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(sql)
+            row = cursor.fetchone()
+            while row:
+                row = cursor.fetchone()
+                if row:
+                    data = [i for i in row]
+                    iot_datas.append(data)
+
+    for i in iot_datas:
+        s.datas[s.iot_devices[i[2]][0]][s.iot_devices[i[2]][1]] = i
+    return s.datas
+
